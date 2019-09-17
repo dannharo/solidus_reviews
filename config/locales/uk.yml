@@ -17,6 +17,16 @@ uk:
         few: '%{count} відгуки'
         many: '%{count} відгуків'
         other: '%{count} відгуків'
+    errors:
+      models:
+        spree/review:
+          attributes:
+            rating:
+              you_must_enter_value_for_rating: 'Потрібно вибрати оцінку.'
+        spree/feedback_review:
+          attributes:
+            rating:
+              you_must_enter_value_for_rating: 'Потрібно вибрати оцінку.'
   spree:
     approval_status: Підтвердження
     approve: Схвалити
@@ -44,16 +54,19 @@ uk:
     reviews: Відгуки
     admin:
       tab:
+        reviews: Відгуки
         review_management: Відгуки
     review_successfully_submitted: Відгук надіслано
     spree_reviews:
       feedback_rating: Оцінювати корисність
+      display_unapproved: Показувати в списках не схвалені відгуки
       include_unapproved: Показувати незатверджені відгуки
       manage_review_settings: Керувати відображенням відгуків
       preview_size: Розмір скороченої версії
       require_login: Тільки для зареєстрованих користувачів
       review_settings: Налаштування відгуків
       show_email: Показувати email
+      show_verified_purchaser: Показати підтвердженого покупця
       track_locale: Зберігати мову користувача
     star:
       one: '1'
@@ -64,6 +77,7 @@ uk:
     submit_your_review: Надіслати відгук
     submitted_on: Написано
     unapproved_reviews: Непідтверджений
+    verified_purchaser: Перевірений покупець
     voice:
       one: '1 голос'
       few: '%{count} голоси'
@@ -71,5 +85,4 @@ uk:
       other: '%{count} голосів'
     was_this_review_helpful: 'Цей відгук корисний для вас?'
     write_your_own_review: Напишіть свій відгук
-    you_must_enter_value_for_rating: 'Потрібно вибрати оцінку.'
     anonymous: Анонім

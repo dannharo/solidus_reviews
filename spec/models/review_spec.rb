@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Spree::Review do
-
   context 'validations' do
     it 'validates by default' do
       expect(build(:review)).to be_valid
@@ -11,8 +12,8 @@ describe Spree::Review do
       expect(build(:review, user: nil)).to be_valid
     end
 
-    it 'does not validate with a nil review' do
-      expect(build(:review, review: nil)).to_not be_valid
+    it 'validates with a nil review' do
+      expect(build(:review, review: nil)).to be_valid
     end
 
     context 'rating' do
@@ -39,15 +40,15 @@ describe Spree::Review do
       end
 
       (1..5).each do |i|
-        it "validates when the rating is #{i}" do
+        it 'validates when the rating is #{i}' do
           expect(build(:review, rating: i)).to be_valid
         end
       end
     end
 
     context 'review body' do
-      it 'should not be valid without a body' do
-        expect(build(:review, review: nil)).to_not be_valid
+      it 'should be valid without a body' do
+        expect(build(:review, review: nil)).to be_valid
       end
     end
   end
@@ -116,10 +117,10 @@ describe Spree::Review do
 
         Spree::Reviews::Config[:include_unapproved_reviews] = true
         expect(Spree::Review.default_approval_filter.to_a).to eq([unapproved_review_2,
-                                                              approved_review_2,
-                                                              approved_review_3,
-                                                              unapproved_review_1,
-                                                              approved_review_1])
+                                                                  approved_review_2,
+                                                                  approved_review_3,
+                                                                  unapproved_review_1,
+                                                                  approved_review_1])
 
         Spree::Reviews::Config[:include_unapproved_reviews] = false
         expect(Spree::Review.default_approval_filter.to_a).to eq([approved_review_2, approved_review_3, approved_review_1])
@@ -127,51 +128,99 @@ describe Spree::Review do
     end
   end
 
-  context "#recalculate_product_rating" do
+  context '#recalculate_product_rating' do
     let(:product) { create(:product) }
     let!(:review) { create(:review, product: product) }
 
     before { product.reviews << review }
 
-    it "if approved" do
+    it 'if approved' do
       expect(review).to receive(:recalculate_product_rating)
       review.approved = true
       review.save!
     end
 
-    it "if not approved" do
+    it 'if not approved' do
       expect(review).to_not receive(:recalculate_product_rating)
       review.save!
     end
 
-    it "updates the product average rating" do
+    it 'updates the product average rating' do
       expect(review.product).to receive(:recalculate_rating)
       review.approved = true
       review.save!
     end
   end
 
-  context "#feedback_stars" do
+  context '#feedback_stars' do
     let!(:review) { create(:review) }
     before do
       3.times do |i|
         f = Spree::FeedbackReview.new
         f.review = review
-        f.rating = (i+1)
+        f.rating = (i + 1)
         f.save
       end
     end
 
-    it "should return the average rating from feedback reviews" do
+    it 'should return the average rating from feedback reviews' do
       expect(review.feedback_stars).to eq 2
     end
   end
 
-  context "#email" do
-    it "returns email from user" do
-      user = build(:user, email: "john@smith.com")
+  context '#email' do
+    it 'returns email from user' do
+      user = build(:user, email: 'john@smith.com')
       review = build(:review, user: user)
-      expect(review.email).to eq("john@smith.com")
+      expect(review.email).to eq('john@smith.com')
+    end
+  end
+
+  context 'images' do
+    it 'supports images' do
+      review = build(:review, images: [build(:image)])
+      expect(review.images).not_to eq(nil)
+    end
+
+    it 'respects order' do
+      image_1 = build(:image, position: 2)
+      image_2 = build(:image, position: 1)
+      review = create(:review, images: [image_1, image_2])
+      review.reload
+      expect(review.images.first).to eq(image_2)
+    end
+  end
+
+  context "#verify_purchaser" do
+    let(:order) { create(:completed_order_with_totals) }
+    let(:product) { order.products.first }
+    let(:user) { order.user }
+    let(:review) { build(:review, user: user, product: product) }
+
+    it "returns true if the user has purchased the product" do
+      expect(review.verified_purchaser).to eq(false)
+      review.verify_purchaser
+      expect(review.verified_purchaser).to eq(true)
+    end
+
+    it "returns false if the user has not purchased the product" do
+      review.user = create(:user)
+      expect(review.verified_purchaser).to eq(false)
+      review.verify_purchaser
+      expect(review.verified_purchaser).to eq(false)
+    end
+
+    it "returns nothing if there is no user_id or product_id" do
+      review.product_id = nil
+      expect(review.verified_purchaser).to eq(false)
+      review.verify_purchaser
+      expect(review.verified_purchaser).to eq(false)
+
+      review.product_id = product.id
+      review.user_id = nil
+      expect(review.verified_purchaser).to eq(false)
+      review.verify_purchaser
+      expect(review.verified_purchaser).to eq(false)
     end
   end
 end

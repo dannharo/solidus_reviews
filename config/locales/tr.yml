@@ -14,6 +14,16 @@ tr:
       spree/review:
         one: bir yorum
         other: "%{count} yorumlar"
+    errors:
+      models:
+        spree/review:
+          attributes:
+            rating:
+              you_must_enter_value_for_rating: "Yorum yazmak için giriş yapmalısınız."
+        spree/feedback_review:
+          attributes:
+            rating:
+              you_must_enter_value_for_rating: "Yorum yazmak için giriş yapmalısınız."
   spree:
     approval_status: Onay Durumu
     approve: Onayla
@@ -40,16 +50,19 @@ tr:
     reviews: Yorumlar
     admin:
       tab:
+        reviews: Yorumlar
         review_management: Yorumlar
     review_successfully_submitted: Yorumunuz başarıyla iletildi
     spree_reviews:
       feedback_rating: Geribildirimi değerlendir
+      display_unapproved: Listelerde onaylanmayan yorumları göster
       include_unapproved: Listede ki onaylanmamış değerlendirmeleri dahil et
       manage_review_settings: Yorum ekranını kontrol edin
       preview_size: Yorum büyüklüğü
       require_login: Yorumları görebilmek için kullanıcı girişi
       review_settings: Yorum Ayarları
       show_email: e-posta adresini göster
+      show_verified_purchaser: Doğrulanmış alıcıyı göster
       track_locale: Kullanıcının yerel bilgilerini kaydet/takip et
     star:
       one: "1"
@@ -58,11 +71,10 @@ tr:
     submit_your_review: Gönder
     submitted_on: "Gönderilme Tarihi:"
     unapproved_reviews: Onaylanmamış
+    verified_purchaser: Doğrulanmış alıcı
     voice:
       one: "1 değerlendirme"
       other: "%{count} değerlendirme"
     was_this_review_helpful: "Bu yorum size yardımcı oldu mu?"
     write_your_own_review: Yorum Yap
-    you_must_enter_value_for_rating: "Yorum yazmak için giriş yapmalısınız."
     anonymous: anonim
-

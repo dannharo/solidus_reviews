@@ -14,6 +14,16 @@ pt:
       spree/review:
         one: uma avaliação
         other: "%{count} avaliações"
+    errors:
+      models:
+        spree/review:
+          attributes:
+            rating:
+              you_must_enter_value_for_rating: "Tem de incluir uma pontuação."
+        spree/feedback_review:
+          attributes:
+            rating:
+              you_must_enter_value_for_rating: "Tem de incluir uma pontuação."
   spree:
     approval_status: Estado de aprovação
     approve: Aprovar
@@ -40,17 +50,20 @@ pt:
     reviews: Avaliações
     admin:
       tab:
+        reviews: Gestão Avaliações
         review_management: Gestão Avaliações
     review_successfully_submitted: A avaliação foi enviada com sucesso
     submission_guidelines: Diretrizes para enviar boas avaliações
     spree_reviews:
       feedback_rating: Pontuação de feedback
+      display_unapproved: Exibir avaliações não aprovadas nas listagens
       include_unapproved: Incluir avaliaçoes não-aprovadas nas lista
       manage_review_settings: Gerir a publicação de avaliações
       preview_size: Tamanho da versão resumida de avaliações
       require_login: Requerer que utilizador esteja registado
       review_settings: Configurações de Avaliação
       show_email: Mostrar email
+      show_verified_purchaser: Mostrar comprador confirmado
       track_locale: Seguir locale do utilizador
     star:
       one: "1"
@@ -59,11 +72,10 @@ pt:
     submit_your_review: Envia tua avaliação
     submitted_on: Enviada em
     unapproved_reviews: Não aprovadas
+    verified_purchaser: Comprador verificado
     voice:
       one: "uma opinião"
       other: "%{count} opiniões"
     was_this_review_helpful: "Esta avaliação foi util?"
     write_your_own_review: Escreve a tua própria avaliação
-    you_must_enter_value_for_rating: "Tem de incluir uma pontuação."
     anonymous: Anônimo
-

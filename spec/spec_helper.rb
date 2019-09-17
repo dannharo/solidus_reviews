@@ -1,30 +1,26 @@
-require 'simplecov'
-SimpleCov.start 'rails'
+# frozen_string_literal: true
 
-ENV["RAILS_ENV"] = "test"
+require "simplecov"
+SimpleCov.start "rails"
 
-require File.expand_path("../dummy/config/environment.rb",  __FILE__)
+ENV["RAILS_ENV"] ||= "test"
 
-# Requires factories and other useful helpers defined in spree_core.
+require File.expand_path('dummy/config/environment.rb', __dir__)
+
 require "solidus_support/extension/feature_helper"
 require 'spree/testing_support/controller_requests'
+require 'spree/testing_support/capybara_ext'
 
-Dir[File.join(File.dirname(__FILE__), "support/**/*.rb")].each {|f| require f }
+Dir[File.join(File.dirname(__FILE__), "support/**/*.rb")].each { |f| require f }
 
 require 'solidus_reviews/factories'
 
 RSpec.configure do |config|
-  config.include Spree::TestingSupport::ControllerRequests, type: :controller
-
   config.infer_spec_type_from_file_location!
-  config.use_transactional_fixtures = false
+  config.raise_errors_for_deprecations!
 
-  Capybara.javascript_driver = :poltergeist
+  config.example_status_persistence_file_path = "./spec/examples.txt"
 
-  if Gem.loaded_specs['solidus'].version < Gem::Version.new('2.4')
-    config.include VersionCake::TestHelpers, type: :controller
-    config.before(:each, type: :controller) do
-      set_request_version('', 1)
-    end
-  end
+  config.include Spree::TestingSupport::UrlHelpers
+  config.include Spree::TestingSupport::ControllerRequests, type: :controller
 end

@@ -15,6 +15,16 @@ pl:
         one: jedna opinia
         few: "%{count} opinii"
         other: "%{count} opinii"
+    errors:
+      models:
+        spree/review:
+          attributes:
+            rating:
+              you_must_enter_value_for_rating: "Musisz wystawić jakąś ocenę."
+        spree/feedback_review:
+          attributes:
+            rating:
+              you_must_enter_value_for_rating: "Musisz wystawić jakąś ocenę."
   spree:
     approval_status: Status zatwierdzenia
     approve: Zatwierdź
@@ -42,16 +52,19 @@ pl:
     reviews: Opinie
     admin:
       tab:
+        reviews: Opinie
         review_management: Opinie
     review_successfully_submitted: Opinia została dodana
     spree_reviews:
       feedback_rating: Oceń komentarz
+      display_unapproved: Wyświetlaj niezatwierdzone recenzje we wpisach
       include_unapproved: Załącz niezaakceptowane do listy
       manage_review_settings: Zarządzaj wyśiwetlaniem opinii
       preview_size: Liczba opinii na stronie produktu
       require_login: "Wymagaj, aby użytkownik był zalogowany"
       review_settings: Ustawienia opinii
       show_email: Pokaż adresy email
+      show_verified_purchaser: Pokaż zweryfikowanego nabywcę
       track_locale: Śledź język użytkownika
     star:
       one: "1"
@@ -61,12 +74,11 @@ pl:
     submit_your_review: Dodaj opinię
     submitted_on: Dodano
     unapproved_reviews: Niezaakceptowane
+    verified_purchaser: Zweryfikowany nabywca
     voice:
       one: "1 głos"
       few: "%{count} głosów"
       other: "%{count} głosów"
     was_this_review_helpful: "Czy ta opinia była pomocna dla Ciebie?"
     write_your_own_review: Napisz swoją opinię
-    you_must_enter_value_for_rating: "Musisz wystawić jakąś ocenę."
     anonymous: Anonimowy
-

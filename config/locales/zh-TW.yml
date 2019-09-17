@@ -14,6 +14,16 @@ zh-TW:
       spree/review:
         one: 一個評論
         other: '%{count}個評論'
+    errors:
+      models:
+        spree/review:
+          attributes:
+            rating:
+              you_must_enter_value_for_rating: 您必需輸入評級
+        spree/feedback_review:
+          attributes:
+            rating:
+              you_must_enter_value_for_rating: 您必需輸入評級
   spree:
     approve: 核準
     approved_reviews: 核準
@@ -38,16 +48,19 @@ zh-TW:
     reviews: 評論
     admin:
       tab:
+        reviews: 評論
         review_management: 評論
     review_successfully_submitted: 已成功遞交評論。
     spree_reviews:
       feedback_rating: 評級回饋
+      display_unapproved: 在列表中顯示未經批准的評論
       include_unapproved: 包括未核準評論在列表中
       manage_review_settings: 控制評論的顯示
       preview_size: 評論片段的大小
       require_login: 用者必需登入
       review_settings: 評論設定
       show_email: 顯示電郵地址
+      show_verified_purchaser: 顯示經過驗證的購買者
       track_locale: 追蹤用戶地域
     star:
       one: "1"
@@ -56,10 +69,10 @@ zh-TW:
     submit_your_review: 遞交你的評論
     submitted_on: 遞交日期
     unapproved_reviews: 沒核準
+    verified_purchaser: 驗證購買者
     voice:
       one: "1 聲音"
       other: "%{count} 聲音"
     was_this_review_helpful: 此評論對你是否有幫助？
     write_your_own_review: 寫下您的評論
-    you_must_enter_value_for_rating: 您必需輸入評級
     anonymous: 匿名者

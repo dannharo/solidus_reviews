@@ -14,6 +14,16 @@ en-GB:
       spree/review:
         one: one review
         other: "%{count} reviews"
+    errors:
+      models:
+        spree/review:
+          attributes:
+            rating:
+              you_must_enter_value_for_rating: "You must enter a value for rating."
+        spree/feedback_review:
+          attributes:
+            rating:
+              you_must_enter_value_for_rating: "You must enter a value for rating."
   spree:
     approval_status: Approval status
     approve: Approve
@@ -40,16 +50,19 @@ en-GB:
     reviews: Reviews
     admin:
       tab:
+        reviews: Reviews
         review_management: Reviews
     review_successfully_submitted: Review was successfully submitted
     spree_reviews:
       feedback_rating: Rate feedback
+      display_unapproved: Display unapproved reviews in listings
       include_unapproved: Include unapproved reviews in listings
       manage_review_settings: Control the display of reviews
       preview_size: Size of the review snippets
       require_login: Require user to be logged in
       review_settings: Review Settings
       show_email: Show email addresses
+      show_verified_purchaser: Show verified purchaser
       track_locale: Track user's locale
     star:
       one: "1"
@@ -58,11 +71,10 @@ en-GB:
     submit_your_review: Submit your review
     submitted_on: Submitted on
     unapproved_reviews: Unapproved
+    verified_purchaser: Verified purchaser
     voice:
       one: "1 voice"
       other: "%{count} voices"
     was_this_review_helpful: "Was this review helpful to you?"
     write_your_own_review: Write your own review
-    you_must_enter_value_for_rating: "You must enter a value for rating."
     anonymous: Anonymous
-

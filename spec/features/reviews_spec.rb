@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 feature 'Reviews', js: true do
   given!(:someone) { create(:user, email: 'ryan@spree.com') }
   given!(:review) { create(:review, :approved, user: someone) }
+  given!(:unapproved_review) { create(:review, product: review.product) }
 
   background do
     Spree::Reviews::Config.include_unapproved_reviews = false
@@ -12,7 +15,7 @@ feature 'Reviews', js: true do
     given!(:product_no_reviews) { create(:product) }
     scenario 'informs that no reviews has been written yet' do
       visit spree.product_path(product_no_reviews)
-      expect(page).to have_text Spree.t(:no_reviews_available)
+      expect(page).to have_text I18n.t('spree.no_reviews_available')
     end
 
     # Regression test for #103
@@ -44,7 +47,7 @@ feature 'Reviews', js: true do
       end
 
       scenario 'can not create review' do
-        expect(page).not_to have_text Spree.t(:write_your_own_review)
+        expect(page).not_to have_text I18n.t('spree.write_your_own_review')
       end
     end
   end
@@ -65,14 +68,27 @@ feature 'Reviews', js: true do
         expect(page).to have_text review.title
       end
 
+      context 'with unapproved content allowed' do
+        background do
+          Spree::Reviews::Config[:include_unapproved_reviews] = true
+          Spree::Reviews::Config[:display_unapproved_reviews] = true
+          visit spree.product_path(review.product)
+        end
+
+        scenario 'can see unapproved content when allowed' do
+          expect(unapproved_review.approved?).to eq(false)
+          expect(page).to have_text unapproved_review.title
+        end
+      end
+
       scenario 'can see create new review button' do
-        expect(page).to have_text Spree.t(:write_your_own_review)
+        expect(page).to have_text I18n.t('spree.write_your_own_review')
       end
 
       scenario 'can create new review' do
-        click_on Spree.t(:write_your_own_review)
+        click_on I18n.t('spree.write_your_own_review')
 
-        expect(page).to have_text Spree.t(:leave_us_a_review_for, name: review.product.name)
+        expect(page).to have_text I18n.t('spree.leave_us_a_review_for', name: review.product.name)
         expect(page).not_to have_text 'Show Identifier'
 
         within '#new_review' do
@@ -81,10 +97,11 @@ feature 'Reviews', js: true do
           fill_in 'review_name', with: user.email
           fill_in 'review_title', with: 'Great product!'
           fill_in 'review_review', with: 'Some big review text..'
+          attach_file 'review_images', Spree::Core::Engine.root + 'spec/fixtures/thinking-cat.jpg'
           click_on 'Submit your review'
         end
 
-        expect(page.find('.flash.notice', text: Spree.t(:review_successfully_submitted))).to be_truthy
+        expect(page.find('.flash.notice', text: I18n.t('spree.review_successfully_submitted'))).to be_truthy
         expect(page).not_to have_text 'Some big review text..'
       end
     end
@@ -99,10 +116,9 @@ feature 'Reviews', js: true do
     end
 
     scenario 'show anonymous review' do
-      expect(page).to have_text Spree.t(:anonymous)
+      expect(page).to have_text I18n.t('spree.anonymous')
       expect(page).to have_text 'review text'
     end
-
   end
 
   private

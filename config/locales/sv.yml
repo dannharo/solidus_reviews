@@ -14,6 +14,16 @@ sv:
       spree/review:
         one: "en recension"
         other: "%{count} recensioner"
+    errors:
+      models:
+        spree/review:
+          attributes:
+            rating:
+              you_must_enter_value_for_rating: "Du måste ange ett värde för betyg."
+        spree/feedback_review:
+          attributes:
+            rating:
+              you_must_enter_value_for_rating: "Du måste ange ett värde för betyg."
   spree:
     anonymous: Anonym
     approval_status: Status för godkännande
@@ -39,17 +49,20 @@ sv:
     rating: betyg
     admin:
       tab:
+        reviews: "Recensioner"
         review_management: "Hantera recensioner"
     review_successfully_submitted: "Recension har skapats"
     reviews: Recensioner
     spree_reviews:
       feedback_rating: Betygsåterkoppling
+      display_unapproved: "Visa ej godkända recensioner i listor"
       include_unapproved: "Inkludera inte godkända recensioner i listan"
       manage_review_settings: "Kontrollera visningen av recensionerna"
       preview_size: "Storlek på recensions snippets"
       require_login: "Kräv att användaren är inloggad"
       review_settings: "Recensions inställningar"
       show_email: "Visa epost adresser"
+      show_verified_purchaser: Visa verifierad köpare
       track_locale: "Spåra användarens språk"
     star:
       one: "1"
@@ -58,9 +71,9 @@ sv:
     submit_your_review: "Skicka in din recension"
     submitted_on: "Skapad den"
     unapproved_reviews: "Icke godkänd"
+    verified_purchaser: Verifierad köpare
     voice:
       one: "1 röst"
       other: "%{count} röster"
     was_this_review_helpful: "Var denna recension användbar för dig?"
     write_your_own_review: "Skriv din egen recension"
-    you_must_enter_value_for_rating: "Du måste ange ett värde för betyg."

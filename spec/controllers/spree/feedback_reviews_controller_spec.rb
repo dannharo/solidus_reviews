@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Spree::FeedbackReviewsController do
@@ -10,12 +12,12 @@ describe Spree::FeedbackReviewsController do
       feedback_review: {
         rating: '4 stars',
         comment: 'some comment'
-      }}
+      } }
   end
 
   before do
-    controller.stub spree_current_user: user
-    controller.stub spree_user_signed_in?: true
+    allow(controller).to receive(:spree_current_user).and_return(user)
+    allow(controller).to receive(:spree_user_signed_in?).and_return(true)
     request.env['HTTP_REFERER'] = '/'
   end
 
@@ -27,7 +29,8 @@ describe Spree::FeedbackReviewsController do
         post :create, params: { review_id: review.id,
                         feedback_review: {
                           comment: comment,
-                          rating: rating },
+                          rating: rating
+},
                         format: :js }
         expect(response.status).to eq(200)
         expect(response).to render_template(:create)
@@ -37,7 +40,6 @@ describe Spree::FeedbackReviewsController do
       expect(feedback_review.review).to eq(review)
       expect(feedback_review.rating).to eq(rating)
       expect(feedback_review.user).to eq(user)
-
     end
 
     it 'redirects back to the calling page' do
@@ -52,10 +54,11 @@ describe Spree::FeedbackReviewsController do
     end
 
     it 'fails when user is not authorized' do
-      controller.stub(:authorize!) { raise }
+      allow(controller).to receive(:authorize!).and_raise(RuntimeError)
+
       expect {
         post :create, params: valid_attributes
-      }.to raise_error RuntimeError
+      }.to raise_error
     end
 
     it 'removes all non-numbers from ratings parameter' do
@@ -65,7 +68,7 @@ describe Spree::FeedbackReviewsController do
 
     it 'do not create feedback-review if review doesnt exist' do
       expect {
-        post :create, params: valid_attributes.merge!({review_id: nil})
+        post :create, params: valid_attributes.merge!({ review_id: nil })
       }.to raise_error ActionController::UrlGenerationError
     end
   end
